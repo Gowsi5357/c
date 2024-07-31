@@ -1,0 +1,30 @@
+#include <stdio.h>
+int max(int a, int b) {
+    return a > b ? a : b;
+}
+int main() {
+    int n, k;
+    scanf("%d %d", &n, &k);
+    int arr[n];
+    int remainderCount[k];
+
+    for (int i = 0; i < k; i++) {
+        remainderCount[i] = 0;
+    }
+    for (int i = 0; i < n; i++) {
+        scanf("%d", &arr[i]);
+        remainderCount[arr[i] % k]++;
+    }
+    int subsetSize = min(1, remainderCount[0]);
+
+    for (int i = 1; i <= k/2; i++) {
+        if (i != k - i) {
+            subsetSize += max(remainderCount[i], remainderCount[k - i]);
+        }
+    }
+    if (k % 2 == 0) {
+        subsetSize += 1;
+    }
+    printf("%d\n", subsetSize);
+    return 0;
+}
