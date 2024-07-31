@@ -1,0 +1,23 @@
+#include <stdio.h>
+#include <string.h>
+int main() {
+    int n, m;
+    scanf("%d %d", &n, &m);
+    int coins[m];
+
+    for (int i = 0; i < m; i++) {
+        scanf("%d", &coins[i]);
+    }
+
+    long long ways[n + 1];
+    memset(ways, 0, sizeof(ways));
+    ways[0] = 1;
+
+    for (int i = 0; i < m; i++) {
+        for (int j = coins[i]; j <= n; j++) {
+            ways[j] += ways[j - coins[i]];
+        }
+    }
+    printf("%lld\n", ways[n]);
+    return 0;
+}
