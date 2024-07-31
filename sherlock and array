@@ -1,0 +1,47 @@
+Problem: "Sherlock and Array"
+Problem Statement:
+Watson gives Sherlock an array of integers. Sherlock has to find an element in the array such that the sum of the elements on its left is equal to the sum of the elements on its right.
+Input:
+- The first line contains the number of test cases.
+- For each test case, the first line contains an integer N, the size of the array.
+- The second line contains N space-separated integers of the array.
+
+Output:
+- For each test case, print "YES" if there is an element in the array that satisfies the condition, otherwise print "NO".
+code:
+#include <stdio.h>
+int main() {
+    int T;
+    scanf("%d", &T);
+
+    while (T--) {
+        int n;
+        scanf("%d", &n);
+        int arr[n];
+        long long totalSum = 0, leftSum = 0;
+
+        for (int i = 0; i < n; i++) {
+            scanf("%d", &arr[i]);
+            totalSum += arr[i];
+        }
+        int found = 0;
+        for (int i = 0; i < n; i++) {
+            totalSum -= arr[i];
+
+            if (leftSum == totalSum) {
+                found = 1;
+                break;
+            }
+
+            leftSum += arr[i];
+        }
+
+        if (found) {
+            printf("YES\n");
+        } else {
+            printf("NO\n");
+        }
+    }
+
+    return 0;
+}
