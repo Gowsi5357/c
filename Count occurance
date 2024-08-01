@@ -1,0 +1,48 @@
+#include <stdio.h>
+#include <string.h>
+#include <ctype.h>
+#define MAX_WORDS 100
+#define MAX_LENGTH 50
+typedef struct {
+    char word[MAX_LENGTH];
+    int count;
+} WordCount;
+void countWords(const char *str, WordCount *words, int *numWords) {
+    char temp[MAX_LENGTH];
+    int length = strlen(str);
+    int wordStart = 0, index = 0;
+    for (int i = 0; i <= length; ++i) {
+        if (isspace(str[i]) || str[i] == '\0') {
+            strncpy(temp, str + wordStart, i - wordStart);
+            temp[i - wordStart] = '\0';
+            wordStart = i + 1;
+            int found = 0;
+            for (int j = 0; j < *numWords; ++j) {
+                if (strcmp(words[j].word, temp) == 0) {
+                    words[j].count++;
+                    found = 1;
+                    break;
+                }
+            }
+            if (!found) {
+                strcpy(words[index].word, temp);
+                words[index].count = 1;
+                index++;
+            }
+        }
+    }
+    *numWords = index;
+}
+int main() {
+    char str[1000];
+    WordCount words[MAX_WORDS];
+    int numWords = 0;
+    printf("Enter a string: ");
+    fgets(str, sizeof(str), stdin);
+    countWords(str, words, &numWords);
+    printf("Word occurrences:\n");
+    for (int i = 0; i < numWords; ++i) {
+        printf("%s: %d\n", words[i].word, words[i].count);
+    }
+    return 0;
+}
